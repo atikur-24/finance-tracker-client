@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -19,11 +18,16 @@ const TransactionForm = () => {
       10,
     );
     // post transaction data to server & DB
-    axios
-      .post("http://localhost:5000/transactions", transactionData)
-      .then((res) => {
-        console.log(res);
-        if (res.data.insertedId) {
+    fetch("http://localhost:5000/transactions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(transactionData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.insertedId) {
           toast.success("Transaction Added Success", {
             position: "top-center",
             theme: "colored",
@@ -34,9 +38,9 @@ const TransactionForm = () => {
           navigate("/");
         }
       })
-      .catch((err) => {
-        if (err) {
-          toast.error("Transaction Added Failed", {
+      .catch((error) => {
+        if (error) {
+          toast.error("Transaction Add Failed", {
             position: "top-center",
             theme: "colored",
             autoClose: 3000,
@@ -88,7 +92,7 @@ const TransactionForm = () => {
           <div className="grid grid-cols-1 gap-5 pb-3 lg:grid-cols-2 lg:pb-6">
             {/* user transaction amount input field */}
             <div className="space-y-1 lg:space-y-3">
-              <label className="block">Enter Transaction Amount (৳) :</label>
+              <label className="block">Enter Transaction Amount (৳):</label>
               <input
                 className="w-full rounded bg-bgSecondary p-2 outline-none outline-offset-0 transition-all focus:outline-primary lg:px-3 lg:py-2.5"
                 type="number"
@@ -97,16 +101,15 @@ const TransactionForm = () => {
               />
               {errors.transaction_amount && (
                 <small className="text-xs text-red-500">
-                  Please write transaction amount & must greater than 1
+                  Please write transaction amount & must be greater than 1
                 </small>
               )}
             </div>
             {/* user transaction type */}
             <div className="space-y-2 lg:space-y-3">
-              <label htmlFor="priority">Select Transaction Type</label>
+              <label htmlFor="priority">Select Transaction Type:</label>
               <select
                 className="w-full rounded bg-bgSecondary p-2 outline-none outline-offset-0 transition-all focus:outline-primary lg:px-3 lg:py-2.5"
-                name="priority"
                 {...register("transaction_type", { required: true })}
               >
                 <option value="">Select Type</option>
@@ -123,7 +126,7 @@ const TransactionForm = () => {
           <div className="grid grid-cols-1 gap-5 pb-3 lg:grid-cols-2 lg:pb-6">
             {/* user transaction category */}
             <div className="space-y-1 lg:space-y-3">
-              <label className="block">Enter Transaction Category</label>
+              <label className="block">Enter Transaction Category:</label>
               <input
                 className="w-full rounded bg-bgSecondary p-2 outline-none outline-offset-0 transition-all focus:outline-primary lg:px-3 lg:py-2.5"
                 type="text"
@@ -138,10 +141,9 @@ const TransactionForm = () => {
             </div>
             {/* user transaction date */}
             <div className="space-y-1 lg:space-y-3">
-              <label className="block">Enter Transaction Date</label>
+              <label className="block">Enter Transaction Date:</label>
               <input
                 type="date"
-                name="transaction_date"
                 className="w-full rounded bg-bgSecondary p-2 outline-none outline-offset-0 transition-all focus:outline-primary lg:px-3 lg:py-2.5"
                 {...register("transaction_date", { required: true })}
               />
@@ -152,8 +154,26 @@ const TransactionForm = () => {
               )}
             </div>
           </div>
-          <div className="mt-2 flex items-center justify-center lg:mt-4">
-            <button type="submit" className="submit-btn">
+          {/* user write transaction description */}
+          <div className="space-y-1 lg:space-y-3">
+            <label className="block">Write Transaction Description:</label>
+            <textarea
+              rows="3"
+              className="w-full resize-none rounded bg-bgSecondary p-2 outline-none outline-offset-0 transition-all focus:outline-primary lg:px-3 lg:py-2.5"
+              {...register("transaction_desc", {
+                required: true,
+                minLength: 5,
+                maxLength: 100,
+              })}
+            />
+            {errors.transaction_desc && (
+              <small className="text-xs text-red-500">
+                Please write transaction description within 5 to 100 words
+              </small>
+            )}
+          </div>
+          <div className="mt-2 flex items-center justify-center lg:mt-6">
+            <button type="submit" className="add-btn">
               Add Transaction
             </button>
           </div>
