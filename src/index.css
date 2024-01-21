@@ -5,9 +5,19 @@
 @layer components {
   /* button style */
   .buy-btn {
-    @apply bg-primary inline-flex  w-[180px] items-center justify-center rounded-sm px-6 py-2   text-xs font-medium text-white lg:px-[60px] lg:py-[13px] lg:text-sm;
+    @apply inline-flex w-[180px]  items-center justify-center rounded-sm bg-primary px-6 py-2   text-xs font-medium text-white lg:px-[60px] lg:py-[13px] lg:text-sm;
   }
   .cart-btn {
-    @apply bg-secondary text-gray-7 inline-flex w-[180] items-center justify-center gap-2 rounded-sm px-6 py-2 text-xs   font-medium lg:gap-[10px] lg:px-[37px] lg:py-[13px] lg:text-sm;
+    @apply inline-flex w-[180] items-center justify-center gap-2 rounded-sm bg-secondary px-6 py-2 text-xs font-medium   text-gray-7 lg:gap-[10px] lg:px-[37px] lg:py-[13px] lg:text-sm;
   }
+  .submit-btn {
+    @apply rounded-md bg-[#00D991A1] px-3 py-2 text-sm font-medium uppercase tracking-wide text-white transition-all hover:opacity-90 lg:px-4 lg:py-2.5 lg:text-base lg:font-semibold;
+  }
+}
+
+/* Remove increment and decrement arrows from number input */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
