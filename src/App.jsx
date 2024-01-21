@@ -1,7 +1,15 @@
+import HeroSection from "./HeroSection";
+import Footer from "./components/Footer";
+import Navbar from "./components/Navbar";
+
 function App() {
   return (
     <>
-      <h3>Personal Finance Tracker</h3>
+      <Navbar />
+      <main>
+        <HeroSection />
+      </main>
+      <Footer />
     </>
   );
 }
