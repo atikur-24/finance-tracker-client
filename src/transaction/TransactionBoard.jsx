@@ -49,7 +49,7 @@ const TransactionBoard = () => {
 
   // Apply filtering and sorting to transactions
   const filteredTransactions = transactions
-    .filter((transaction) => {
+    ?.filter((transaction) => {
       const { type } = filterOptions;
 
       // Filter by transaction type
@@ -83,7 +83,7 @@ const TransactionBoard = () => {
   };
 
   // Apply search filter to transactions
-  const searchedTransactions = filteredTransactions.filter((transaction) =>
+  const searchedTransactions = filteredTransactions?.filter((transaction) =>
     transaction.transaction_category
       .toLowerCase()
       .includes(searchQuery.toLowerCase()),
@@ -100,9 +100,9 @@ const TransactionBoard = () => {
           <div className="rounded-lg border border-[rgba(206,206,206,0.12)] bg-gray-9 px-6 py-8 md:px-9 md:py-16">
             {/* add new transaction or delete all */}
             <TransactionActions setTransactions={setTransactions} />
-            {transactions.length > 0 ? (
+            {transactions?.length > 0 ? (
               // render all transaction list
-              <TransactionList />
+              <TransactionList setTransactions={setTransactions} />
             ) : (
               <NoTransitionFound />
             )}

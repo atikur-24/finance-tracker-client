@@ -26,7 +26,7 @@ const TransactionForm = () => {
       transactionDate.toLocaleDateString("en-GB");
 
     // post transaction data to server & DB
-    fetch("http://localhost:5000/transactions", {
+    fetch("https://finance-tracker-server-theta.vercel.app/transactions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

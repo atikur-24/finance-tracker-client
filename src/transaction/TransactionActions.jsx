@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import useAuth from "../hooks/useAuth";
 
 const TransactionActions = ({ setTransactions }) => {
+  const { user } = useAuth();
+
   const handleDeleteAllTransaction = () => {
     Swal.fire({
       title: "Are you sure?",
@@ -13,9 +16,12 @@ const TransactionActions = ({ setTransactions }) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch("http://localhost:5000/transactions", {
-          method: "DELETE",
-        })
+        fetch(
+          `https://finance-tracker-server-theta.vercel.app/transactions?email=${user?.email}`,
+          {
+            method: "DELETE",
+          },
+        )
           .then((res) => res.json())
           .then((data) => {
             if (data.deletedCount > 0) {

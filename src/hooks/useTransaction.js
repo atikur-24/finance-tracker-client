@@ -1,13 +1,20 @@
 import { useEffect, useState } from "react";
+import useAuth from "./useAuth";
 
 export default function useTransaction() {
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { user } = useAuth();
 
   useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:5000/transactions");
+        const response = await fetch(
+          `https://finance-tracker-server-theta.vercel.app/transactions?email=${user?.email}`,
+          { signal },
+        );
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -22,7 +29,10 @@ export default function useTransaction() {
     };
 
     fetchData();
-  }, []);
+    return () => {
+      controller.abort();
+    };
+  }, [user?.email]);
 
   return [transactions, setTransactions, loading];
 }
