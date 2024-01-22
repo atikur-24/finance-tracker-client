@@ -1,8 +1,11 @@
+import { useContext } from "react";
 import { HiOutlineEye } from "react-icons/hi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { TiEdit } from "react-icons/ti";
+import { TransactionContext } from "../contexts/TransactionProvider";
 
-const TransactionList = ({ transactions }) => {
+const TransactionList = () => {
+  const transactions = useContext(TransactionContext);
   return (
     <div className="overflow-auto">
       <table className="table-fixed overflow-auto xl:w-full">
@@ -41,12 +44,12 @@ const TransactionList = ({ transactions }) => {
                 <div className="flex items-center justify-center space-x-3">
                   <HiOutlineEye
                     title="View Details"
-                    className="rounded-sm bg-gray-400 p-1 text-2xl text-white transition-colors"
+                    className="cursor-pointer rounded-sm bg-gray-400 p-1 text-2xl text-white transition-colors hover:opacity-80"
                   />
 
                   <TiEdit
                     title="Edit"
-                    className="hover:bg-my-accent rounded-sm bg-blue-600 p-1 text-2xl text-white transition-colors"
+                    className="cursor-pointer rounded-sm bg-blue-600 p-1 text-2xl text-white transition-colors hover:opacity-80"
                   />
                   <button
                     type="button"
@@ -54,7 +57,7 @@ const TransactionList = ({ transactions }) => {
                   >
                     <RiDeleteBinLine
                       title="Delete"
-                      className="rounded-sm bg-red-500 p-1 text-2xl text-white transition-colors"
+                      className="rounded-sm bg-red-500 p-1 text-2xl text-white transition-colors hover:opacity-80"
                     />
                   </button>
                 </div>

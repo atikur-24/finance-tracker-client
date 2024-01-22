@@ -24,5 +24,5 @@ export default function useTransaction() {
     fetchData();
   }, []);
 
-  return [transactions, loading];
+  return [transactions, setTransactions, loading];
 }

@@ -13,10 +13,16 @@ const TransactionForm = () => {
   } = useForm();
 
   const onSubmit = (transactionData) => {
+    // amount input field data convert to numeric
     transactionData.transaction_amount = parseFloat(
       transactionData.transaction_amount,
       10,
     );
+    // Format the transaction_date to "day-month-year" order
+    const transactionDate = new Date(transactionData.transaction_date);
+    transactionData.transaction_date =
+      transactionDate.toLocaleDateString("en-GB");
+
     // post transaction data to server & DB
     fetch("http://localhost:5000/transactions", {
       method: "POST",
