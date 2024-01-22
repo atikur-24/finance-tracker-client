@@ -2,6 +2,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 
 const TransactionModal = ({ setIsOpen, isOpen }) => {
+  // closed modal
   function closeModal() {
     setIsOpen(false);
   }
