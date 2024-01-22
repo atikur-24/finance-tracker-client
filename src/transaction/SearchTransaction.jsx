@@ -11,7 +11,7 @@ const SearchTransaction = ({ onSearch }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="flex">
+      <div className="flex text-sm md:text-base">
         <div className="m:min-w-[380px] relative w-full overflow-hidden rounded-md border-2 border-deep-green lg:min-w-[440px]">
           <input
             type="search"

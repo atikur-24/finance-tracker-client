@@ -3,18 +3,38 @@
 @tailwind utilities;
 
 @layer components {
+  /* custom container */
+  .my-container {
+    @apply container mx-auto px-10 lg:px-20;
+  }
   /* button style */
-  .adafd-btn {
+  .delete-btn {
     @apply inline-flex w-[180px]  items-center justify-center rounded-sm bg-primary px-6 py-2   text-xs font-medium text-white lg:px-[60px] lg:py-[13px] lg:text-sm;
   }
-  .delete-btn {
-    @apply text-gray-7 inline-flex w-[180] items-center justify-center gap-2 rounded-sm bg-secondary px-6 py-2 text-xs   font-medium lg:gap-[10px] lg:px-[37px] lg:py-[13px] lg:text-sm;
-  }
   .search-btn {
-    @apply bg-deep-green mr-1 flex items-center space-x-1.5 rounded-md px-4 py-2 text-sm text-white;
+    @apply mr-1 flex items-center space-x-1.5 rounded-md bg-deep-green px-4 py-2 text-sm text-white;
   }
   .add-btn {
-    @apply bg-deep-green rounded-md px-3 py-2 text-sm font-medium uppercase tracking-wide text-white transition-all hover:opacity-90 lg:px-4 lg:py-2.5 lg:text-base lg:font-semibold;
+    @apply cursor-pointer rounded-md bg-deep-green px-3 py-2 text-sm font-medium uppercase tracking-wide text-white transition-all hover:opacity-90 lg:px-4 lg:py-2.5 lg:text-base lg:font-semibold;
+  }
+}
+
+/* loader design */
+.loader {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #00cf5d;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 

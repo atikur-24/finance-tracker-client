@@ -1,6 +1,6 @@
 const FilterTransaction = ({ onFilter }) => {
   return (
-    <div className="flex items-stretch space-x-3">
+    <div className="flex items-stretch space-x-3 text-sm lg:text-base">
       <select
         onChange={(e) => onFilter(e.target.value)}
         className="cursor-pointer rounded-md border-2 border-deep-green bg-bgSecondary px-4 py-2.5 text-center outline-none"

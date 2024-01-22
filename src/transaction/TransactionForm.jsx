@@ -1,8 +1,10 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import useAuth from "../hooks/useAuth";
 
 const TransactionForm = () => {
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   const {
@@ -68,6 +70,7 @@ const TransactionForm = () => {
             <div className="space-y-1 lg:space-y-3">
               <label className="block">Your name:</label>
               <input
+                defaultValue={user?.displayName}
                 className="w-full rounded bg-bgSecondary p-2 outline-none outline-offset-0 transition-all focus:outline-primary lg:px-3 lg:py-2.5"
                 type="text"
                 placeholder="Your Name"
@@ -81,18 +84,15 @@ const TransactionForm = () => {
             </div>
             {/* user email input field */}
             <div className="space-y-1 lg:space-y-3">
-              <label className="block">Your Email:</label>
+              <label className="block">Your Email (read only):</label>
               <input
-                className="w-full rounded bg-bgSecondary p-2 outline-none outline-offset-0 transition-all focus:outline-primary lg:px-3 lg:py-2.5"
+                readOnly
+                defaultValue={user?.email}
+                className="w-full rounded bg-bgSecondary p-2 text-gray-300 outline-none lg:px-3 lg:py-2.5"
                 type="email"
                 placeholder="Your email"
                 {...register("email", { required: true })}
               />
-              {errors.email && (
-                <small className="text-xs text-red-500">
-                  Please write your email
-                </small>
-              )}
             </div>
           </div>
           <div className="grid grid-cols-1 gap-5 pb-3 lg:grid-cols-2 lg:pb-6">

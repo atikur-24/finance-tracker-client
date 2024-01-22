@@ -8,19 +8,19 @@ const TransactionList = () => {
   const transactions = useContext(TransactionContext);
   return (
     <div className="overflow-auto">
-      <table className="table-fixed overflow-auto xl:w-full">
+      <table className="table-fixed overflow-auto text-sm lg:text-base xl:w-full">
         <thead>
           <tr>
-            <th className="w-full p-4 pb-8 text-sm font-semibold capitalize">
+            <th className="w-full p-4 pb-8 text-start text-sm font-semibold capitalize">
               Category
             </th>
-            <th className="w-full p-4 pb-8 text-sm font-semibold capitalize">
+            <th className="p-4 pb-8 text-start text-sm font-semibold capitalize md:w-[200px]">
               Date
             </th>
-            <th className="p-4 pb-8 text-sm font-semibold capitalize md:w-[350px]">
+            <th className="p-4 pb-8 text-sm font-semibold capitalize md:w-[100px]">
               Type
             </th>
-            <th className="p-4 pb-8 text-sm font-semibold capitalize md:w-[100px]">
+            <th className="p-4 pb-8 text-sm font-semibold capitalize md:w-[200px]">
               Amount
             </th>
             <th className="p-4 pb-8 text-sm font-semibold capitalize md:w-[200px]">
@@ -34,12 +34,20 @@ const TransactionList = () => {
               key={transaction._id}
               className="border-b border-[#2E3443] [&>td]:px-4 [&>td]:py-2 [&>td]:align-baseline"
             >
-              <td>{transaction.transaction_category}</td>
+              <td className="capitalize">{transaction.transaction_category}</td>
               <td>
                 <div>{transaction.transaction_date}</div>
               </td>
-              <td>{transaction.transaction_type}</td>
-              <td className="text-center">{transaction.transaction_amount}</td>
+              <td>
+                <span
+                  className={`rounded-full px-2 py-1 text-center text-xs capitalize lg:text-sm ${transaction.transaction_type === "income" ? "bg-deep-green" : "bg-red-800"}`}
+                >
+                  {transaction.transaction_type}
+                </span>
+              </td>
+              <td className="text-center">
+                ৳ {transaction.transaction_amount}
+              </td>
               <td>
                 <div className="flex items-center justify-center space-x-3">
                   <HiOutlineEye

@@ -91,12 +91,12 @@ const TransactionBoard = () => {
 
   return (
     <TransactionContext.Provider value={searchedTransactions}>
-      <section className="container px-8 lg:px-20">
-        <div className="flex items-center justify-between">
+      <section className="my-container">
+        <div className="flex flex-col justify-between gap-5 md:flex-row md:items-center">
           <SearchTransaction onSearch={handleSearch} />
           <FilterTransaction onFilter={handleFilter} />
         </div>
-        <div className="container pt-10">
+        <div className="pt-5 lg:pt-10">
           <div className="rounded-lg border border-[rgba(206,206,206,0.12)] bg-gray-9 px-6 py-8 md:px-9 md:py-16">
             {/* add new transaction or delete all */}
             <TransactionActions setTransactions={setTransactions} />

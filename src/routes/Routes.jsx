@@ -1,7 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import Main from "../layouts/Main";
+import Login from "../signUp/Login";
+import SignUp from "../signUp/SignUp";
 import TransactionForm from "../transaction/TransactionForm";
+import RequiredRoute from "./RequiredRoute";
 
 const router = createBrowserRouter([
   {
@@ -15,16 +18,20 @@ const router = createBrowserRouter([
       },
       {
         path: "addTransaction",
-        element: <TransactionForm />,
+        element: (
+          <RequiredRoute>
+            <TransactionForm />
+          </RequiredRoute>
+        ),
       },
-      // {
-      //   path: "login",
-      //   element: <Login />,
-      // },
-      //   {
-      //     path: "signUp",
-      //     element: <Register />,
-      //   },
+      {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "signUp",
+        element: <SignUp />,
+      },
     ],
   },
 ]);
