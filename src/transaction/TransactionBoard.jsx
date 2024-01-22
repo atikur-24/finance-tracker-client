@@ -10,12 +10,11 @@ import TransactionList from "./TransactionList";
 const TransactionBoard = () => {
   // load all transactions data from custom hook
   const [transactions, setTransactions] = useTransaction();
-
-  // State to store the current filter and sort options
   const [filterOptions, setFilterOptions] = useState({
     type: "",
     sort: "",
   });
+  const [searchQuery, setSearchQuery] = useState("");
 
   // Handle filter by transaction type, newest & oldest date, and amount lowest & highest
   const handleFilter = (value) => {
@@ -78,12 +77,20 @@ const TransactionBoard = () => {
       }
     });
 
+  // Handle search by transaction category
   const handleSearch = (value) => {
-    value.preventDefault();
+    setSearchQuery(value);
   };
 
+  // Apply search filter to transactions
+  const searchedTransactions = filteredTransactions.filter((transaction) =>
+    transaction.transaction_category
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase()),
+  );
+
   return (
-    <TransactionContext.Provider value={filteredTransactions}>
+    <TransactionContext.Provider value={searchedTransactions}>
       <section className="container px-8 lg:px-20">
         <div className="flex items-center justify-between">
           <SearchTransaction onSearch={handleSearch} />
