@@ -1,8 +1,26 @@
-# React + Vite
+# JS Encoder Job Task
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## [Finance Tracker Live Link](https://finance-tracker-1084c.web.app/)
 
-Currently, two official plugins are available:
+### How to run this application ?
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Step - 1: git clone https://github.com/atikur-24/finance-tracker-client.git
+- Step - 2: npm install
+- Step - 3: npm run dev
+
+### Features
+
+- Provide a form for users to input their financial transactions.
+- Implement form validation to ensure accurate data entry.
+- Implement a search functionality by category name.
+- Implement filtering system based on transaction type, amount and type.
+- Offer a dashboard view showing summaries of income and expenses with graphs.
+- Applied user authentication to manage personal accounts securely.
+- Provide dynamic transaction data from api
+- Users can manage their transaction data, like view, edit and delete.
+
+### Used Technologist & Packages
+
+- The website was built for client-side HTML5, CSS3, Tailwind, JavaScript, React.js . Node.js Express, and Database MongoDB are the server-end sides. Firebase authentication. Some packages are React router, React hook form, Tanstack/React query, Recharts, Axios, React toastify, React icons etc.
+
+### [Server Code](https://github.com/atikur-24/personal-finance-tracker-server)
