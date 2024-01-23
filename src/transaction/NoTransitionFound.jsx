@@ -1,6 +1,6 @@
 const NoTransitionFound = () => {
   return (
-    <p className="text-center text-lg lg:text-3xl">
+    <p className="text-center text-lg lg:text-2xl">
       No Transaction Data Found.
     </p>
   );

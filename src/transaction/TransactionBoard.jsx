@@ -9,7 +9,7 @@ import TransactionList from "./TransactionList";
 
 const TransactionBoard = () => {
   // load all transactions data from custom hook
-  const [transactions, setTransactions] = useTransaction();
+  const [transactions, refetch] = useTransaction();
   const [filterOptions, setFilterOptions] = useState({
     type: "",
     sort: "",
@@ -89,8 +89,13 @@ const TransactionBoard = () => {
       .includes(searchQuery.toLowerCase()),
   );
 
+  const data = {
+    searchedTransactions,
+    refetch,
+  };
+
   return (
-    <TransactionContext.Provider value={searchedTransactions}>
+    <TransactionContext.Provider value={data}>
       <section className="my-container">
         <div className="flex flex-col justify-between gap-5 md:flex-row md:items-center">
           <SearchTransaction onSearch={handleSearch} />
@@ -99,10 +104,10 @@ const TransactionBoard = () => {
         <div className="pt-5 lg:pt-10">
           <div className="rounded-lg border border-[rgba(206,206,206,0.12)] bg-gray-9 px-6 py-8 md:px-9 md:py-16">
             {/* add new transaction or delete all */}
-            <TransactionActions setTransactions={setTransactions} />
+            <TransactionActions />
             {transactions?.length > 0 ? (
               // render all transaction list
-              <TransactionList setTransactions={setTransactions} />
+              <TransactionList />
             ) : (
               <NoTransitionFound />
             )}

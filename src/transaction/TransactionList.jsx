@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useContext, useState } from "react";
 import { HiOutlineEye } from "react-icons/hi";
 import { RiDeleteBinLine } from "react-icons/ri";
@@ -5,9 +6,28 @@ import { TiEdit } from "react-icons/ti";
 import Swal from "sweetalert2";
 import { TransactionContext } from "../contexts/TransactionProvider";
 import TransactionModal from "./TransactionModal";
+import ViewDetailsModal from "./ViewDetailsModal";
 
-const TransactionList = ({ setTransactions }) => {
+const TransactionList = () => {
+  // load filtered transactions data and get refetch function using context api
+  const { searchedTransactions, refetch } = useContext(TransactionContext);
+
   const [isOpen, setIsOpen] = useState(false);
+  const [viewIsOpen, setViewIsOpen] = useState(false);
+  const [existingData, setExistingData] = useState({});
+  const [data, setData] = useState({});
+
+  // view single transaction details
+  const handleViewDetails = (transaction) => {
+    setData(transaction);
+    setViewIsOpen(!viewIsOpen);
+  };
+
+  // edit single transaction
+  const handleEditTransaction = (transaction) => {
+    setExistingData(transaction);
+    setIsOpen(!isOpen);
+  };
 
   // delete a single transaction
   const handleDeleteTransaction = (id) => {
@@ -21,29 +41,25 @@ const TransactionList = ({ setTransactions }) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(
-          `https://finance-tracker-server-theta.vercel.app/transactions/${id}`,
-          {
-            method: "DELETE",
-          },
-        )
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.deletedCount > 0) {
+        axios
+          .delete(
+            `https://finance-tracker-server-theta.vercel.app/transactions/${id}`,
+          )
+          .then((res) => {
+            if (res.data.deletedCount > 0) {
               Swal.fire({
                 icon: "success",
                 title: "Transaction has been deleted.",
                 showConfirmButton: false,
                 timer: 1500,
               });
-              setTransactions();
+              refetch();
             }
           });
       }
     });
   };
 
-  const transactions = useContext(TransactionContext);
   return (
     <div className="overflow-auto">
       <table className="table-fixed overflow-auto text-sm lg:text-base xl:w-full">
@@ -67,7 +83,7 @@ const TransactionList = ({ setTransactions }) => {
           </tr>
         </thead>
         <tbody>
-          {transactions.map((transaction) => (
+          {searchedTransactions?.map((transaction) => (
             <tr
               key={transaction?._id}
               className="border-b border-[#2E3443] [&>td]:px-4 [&>td]:py-2 [&>td]:align-baseline"
@@ -90,17 +106,21 @@ const TransactionList = ({ setTransactions }) => {
               </td>
               <td>
                 <div className="flex items-center justify-center space-x-3">
-                  <HiOutlineEye
-                    title="View Details"
-                    className="cursor-pointer rounded-sm bg-gray-400 p-1 text-2xl text-white transition-colors hover:opacity-80"
-                  />
-
-                  <button onClick={() => setIsOpen(!isOpen)}>
+                  {/* view details icons */}
+                  <button onClick={() => handleViewDetails(transaction)}>
+                    <HiOutlineEye
+                      title="View Details"
+                      className="cursor-pointer rounded-sm bg-gray-400 p-1 text-2xl text-white transition-colors hover:opacity-80"
+                    />
+                  </button>
+                  {/* edit icons */}
+                  <button onClick={() => handleEditTransaction(transaction)}>
                     <TiEdit
                       title="Edit"
                       className="cursor-pointer rounded-sm bg-blue-600 p-1 text-2xl text-white transition-colors hover:opacity-80"
                     />
                   </button>
+                  {/* delete icons */}
                   <button
                     type="button"
                     onClick={() => handleDeleteTransaction(transaction?._id)}
@@ -116,7 +136,17 @@ const TransactionList = ({ setTransactions }) => {
           ))}
         </tbody>
       </table>
-      <TransactionModal setIsOpen={setIsOpen} isOpen={isOpen} />
+      <ViewDetailsModal
+        setViewIsOpen={setViewIsOpen}
+        viewIsOpen={viewIsOpen}
+        data={data}
+      />
+      <TransactionModal
+        existingData={existingData}
+        setIsOpen={setIsOpen}
+        isOpen={isOpen}
+        refetch={refetch}
+      />
     </div>
   );
 };

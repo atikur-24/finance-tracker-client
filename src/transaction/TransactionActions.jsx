@@ -1,8 +1,13 @@
+import axios from "axios";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import { TransactionContext } from "../contexts/TransactionProvider";
 import useAuth from "../hooks/useAuth";
 
-const TransactionActions = ({ setTransactions }) => {
+const TransactionActions = () => {
+  // get refetch function form tan stack query using context api
+  const { refetch } = useContext(TransactionContext);
   const { user } = useAuth();
 
   const handleDeleteAllTransaction = () => {
@@ -16,22 +21,19 @@ const TransactionActions = ({ setTransactions }) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(
-          `https://finance-tracker-server-theta.vercel.app/transactions?email=${user?.email}`,
-          {
-            method: "DELETE",
-          },
-        )
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.deletedCount > 0) {
+        axios
+          .delete(
+            `https://finance-tracker-server-theta.vercel.app/transactions?email=${user?.email}`,
+          )
+          .then((res) => {
+            if (res.data.deletedCount > 0) {
               Swal.fire({
                 icon: "success",
                 title: "Deleted successfully",
                 showConfirmButton: false,
                 timer: 1000,
               });
-              setTransactions([]);
+              refetch();
             }
           });
       }
@@ -43,16 +45,13 @@ const TransactionActions = ({ setTransactions }) => {
         Track Your Financial Transaction
       </h2>
       <div className="flex items-center space-x-5">
-        <Link
-          to="/addTransaction"
-          className="rounded bg-blue-500 px-3 py-2 text-xs font-semibold transition-all hover:opacity-80 lg:rounded-md lg:px-3.5 lg:py-2.5 lg:text-sm"
-        >
+        <Link to="/addTransaction" className="open-btn">
           Add Transaction
         </Link>
         <button
           onClick={handleDeleteAllTransaction}
           type="button"
-          className="rounded bg-red-500 px-3 py-2 text-xs font-semibold transition-all hover:opacity-80 lg:rounded-md lg:px-3.5 lg:py-2.5 lg:text-sm"
+          className="close-btn"
         >
           Delete All
         </button>

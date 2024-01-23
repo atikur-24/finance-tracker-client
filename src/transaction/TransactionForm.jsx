@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -20,26 +21,19 @@ const TransactionForm = () => {
       transactionData.transaction_amount,
       10,
     );
-    // Format the transaction_date to "day-month-year" order
-    const transactionDate = new Date(transactionData.transaction_date);
-    transactionData.transaction_date =
-      transactionDate.toLocaleDateString("en-GB");
 
     // post transaction data to server & DB
-    fetch("https://finance-tracker-server-theta.vercel.app/transactions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(transactionData),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.insertedId) {
+    axios
+      .post(
+        "https://finance-tracker-server-theta.vercel.app/transactions",
+        transactionData,
+      )
+      .then((res) => {
+        if (res.data.insertedId) {
           toast.success("Transaction Added Success", {
             position: "top-center",
             theme: "colored",
-            autoClose: 3000,
+            autoClose: 2000,
             pauseOnHover: false,
           });
           reset();

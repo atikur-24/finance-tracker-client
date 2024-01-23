@@ -8,14 +8,27 @@
     @apply container mx-auto px-10 lg:px-20;
   }
   /* button style */
-  .delete-btn {
-    @apply inline-flex w-[180px]  items-center justify-center rounded-sm bg-primary px-6 py-2   text-xs font-medium text-white lg:px-[60px] lg:py-[13px] lg:text-sm;
+  .open-btn {
+    @apply rounded bg-blue-500 px-3 py-2 text-xs font-semibold transition-all hover:opacity-80 lg:rounded-md lg:px-3.5 lg:py-2.5 lg:text-sm;
+  }
+  .close-btn {
+    @apply rounded bg-red-500 px-3 py-2 text-xs font-semibold transition-all hover:opacity-80 lg:rounded-md lg:px-3.5 lg:py-2.5 lg:text-sm;
   }
   .search-btn {
     @apply mr-1 flex items-center space-x-1.5 rounded-md bg-deep-green px-4 py-2 text-sm text-white;
   }
   .add-btn {
     @apply cursor-pointer rounded-md bg-deep-green px-3 py-2 text-sm font-medium uppercase tracking-wide text-white transition-all hover:opacity-90 lg:px-4 lg:py-2.5 lg:text-base lg:font-semibold;
+  }
+}
+
+@layer utilities {
+  .active {
+    @apply text-white transition-all duration-200 hover:text-white hover:opacity-100;
+  }
+
+  .default {
+    @apply opacity-70 transition-all duration-200 hover:text-white hover:opacity-100;
   }
 }
 

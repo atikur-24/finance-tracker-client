@@ -1,5 +1,5 @@
 import { FaRegUserCircle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import Logo from "../assets/logo/save-money.png";
 import Avatar from "../assets/logo/user.png";
 import useAuth from "../hooks/useAuth";
@@ -14,47 +14,52 @@ const Navbar = () => {
   return (
     <nav className="my-container py-6 md:py-8">
       <div className="flex items-center justify-between gap-x-6 border-b border-b-gray-500 pb-5">
-        <a href="/" className="flex items-center gap-x-2 lg:gap-x-4">
+        <a href="/" className="flex items-center gap-x-2 md:gap-x-4">
           <img className="h-[50px]" src={Logo} alt="Finance Tracker" />
           <p className="text-sm font-normal uppercase lg:text-xl lg:font-semibold">
             Finance <br /> <span className="text-primary">Tracker</span>
           </p>
         </a>
         <div className="flex gap-x-3 text-xs lg:gap-x-4 lg:text-base">
-          <Link to="/">Home</Link>
+          <NavLink
+            to="/"
+            className={({ isActive }) => (isActive ? "active" : "default")}
+          >
+            Home
+          </NavLink>
 
           {user && (
             <>
-              <Link to="/">Dashboard</Link>
+              <NavLink
+                to="/dashboard"
+                className={({ isActive }) => (isActive ? "active" : "default")}
+              >
+                Dashboard
+              </NavLink>
             </>
           )}
 
           {user ? (
-            <button onClick={handleLogout} type="button">
+            <button
+              onClick={handleLogout}
+              type="button"
+              className="opacity-70 transition-all hover:text-white hover:opacity-100"
+            >
               Logout
             </button>
           ) : (
-            <Link to="/login">Login</Link>
+            <Link
+              to="/login"
+              className="opacity-70 transition-all hover:text-white hover:opacity-100"
+            >
+              Login
+            </Link>
           )}
-          {/* <div>
-            {user && (
-              <div className="flex gap-2">
-                <button onClick={handleLogout} type="button">
-                  Logout
-                </button>{" "}
-                / <p>Dashboard</p>
-              </div>
-            )}
-            {user === null ||
-              NaN ||
-              <Link to="/login">Login</Link> /
-              <Link to="/signUp">Sign Up</Link>}
-          </div> */}
         </div>
         <div>
           {user && (
             <img
-              className="h-6 lg:h-8"
+              className="h-4 md:h-8"
               src={Avatar}
               alt="Avatar"
               title={user?.email}

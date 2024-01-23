@@ -1,38 +1,21 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import useAuth from "./useAuth";
 
-export default function useTransaction() {
-  const [transactions, setTransactions] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const { user } = useAuth();
+const useTransaction = () => {
+  const { user, loading } = useAuth();
+  const { data: transactions = [], refetch } = useQuery({
+    queryKey: ["transactions", user?.email],
+    enabled: !loading,
+    queryFn: async () => {
+      const data = await axios.get(
+        `https://finance-tracker-server-theta.vercel.app/transactions?email=${user?.email}`,
+      );
+      return data?.data;
+    },
+  });
 
-  useEffect(() => {
-    const controller = new AbortController();
-    const signal = controller.signal;
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `https://finance-tracker-server-theta.vercel.app/transactions?email=${user?.email}`,
-          { signal },
-        );
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
+  return [transactions, refetch];
+};
 
-        const data = await response.json();
-        setTransactions(data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-    return () => {
-      controller.abort();
-    };
-  }, [user?.email]);
-
-  return [transactions, setTransactions, loading];
-}
+export default useTransaction;
