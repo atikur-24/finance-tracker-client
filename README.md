@@ -1,4 +1,4 @@
-# JS Encoder Job Task
+# Personal Finance Tracking Application
 
 ## [Finance Tracker Live Link](https://finance-tracker-1084c.web.app/)
 
